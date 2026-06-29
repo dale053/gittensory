@@ -93,6 +93,16 @@ export interface RedosFinding {
   pattern: string;
 }
 
+/** A JSDoc/docstring whose @param tags don't match the adjacent function signature after the PR's changes —
+ *  either a stale tag for a removed param, or a missing tag for an added param (#1519). */
+export interface DocCommentFinding {
+  file: string;
+  line: number;
+  fn: string;
+  kind: "stale-param" | "missing-param";
+  param: string;
+}
+
 /** A changed file governed by a CODEOWNERS rule where the PR author is not listed as an owner (#1515).
  *  The blast radius (distinct ownership domains crossed) is derived at render time from the full findings set. */
 export interface CodeownersFinding {
@@ -118,6 +128,7 @@ export interface BriefFindings {
   installScript?: InstallScriptFinding[];
   eol?: EolFinding[];
   redos?: RedosFinding[];
+  docComment?: DocCommentFinding[];
   codeowners?: CodeownersFinding[];
   secretLog?: SecretLogFinding[];
 }
