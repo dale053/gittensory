@@ -93,6 +93,13 @@ export interface RedosFinding {
   pattern: string;
 }
 
+/** Changed lines in the PR that are not covered by the project's own CI coverage report (#1516).
+ *  Sourced from GitHub Actions artifacts (lcov / Istanbul JSON / Cobertura XML). */
+export interface CoverageDeltaFinding {
+  file: string;
+  uncoveredLines: number[]; // sorted, 1-indexed new-file line numbers with zero hits
+}
+
 /** A changed file governed by a CODEOWNERS rule where the PR author is not listed as an owner (#1515).
  *  The blast radius (distinct ownership domains crossed) is derived at render time from the full findings set. */
 export interface CodeownersFinding {
@@ -118,6 +125,7 @@ export interface BriefFindings {
   installScript?: InstallScriptFinding[];
   eol?: EolFinding[];
   redos?: RedosFinding[];
+  coverageDelta?: CoverageDeltaFinding[];
   codeowners?: CodeownersFinding[];
   secretLog?: SecretLogFinding[];
 }
